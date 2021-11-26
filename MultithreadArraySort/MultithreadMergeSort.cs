@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MultithreadArraySort
 {
-    internal static class MergeSort
+    public static class MultithreadMergeSort
     {
         public static int[] Sort(int[] array)
         {
@@ -24,10 +25,10 @@ namespace MultithreadArraySort
             Sort(leftArray);
             Sort(rightArray);
 
-            return Merge(leftArray, rightArray);
+            return Merge( leftArray, rightArray);
         }
 
-        private static int[] Merge(int[] leftArray, int[] rightArray)
+        public static int[] Merge(int[] leftArray, int[] rightArray)
         {
             int[] array = new int[leftArray.Length + rightArray.Length];
             int i = 0;
@@ -35,7 +36,7 @@ namespace MultithreadArraySort
             for (int k = 0; k < array.Length; k++)
             {
                 if (j >= rightArray.Length)
-                {                    
+                {
                     array[k] = leftArray[i];
                     i++;
                     continue;
