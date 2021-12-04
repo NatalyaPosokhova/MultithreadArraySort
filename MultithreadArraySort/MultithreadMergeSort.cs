@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultithreadArraySort
 {
     public static class MultithreadMergeSort
     {
-        public static int[] Sort(int[] array)
+        public static async Task<int[]> Sort(int[] array)
         {
             if (array.Length < 2)
                 return array;
@@ -22,15 +19,19 @@ namespace MultithreadArraySort
             Array.Copy(array, 0, leftArray, 0, leftSize);
             Array.Copy(array, leftSize, rightArray, 0, rightSize);
 
-            Sort(leftArray);
-            Sort(rightArray);
+            Task<int[]> task1 = Task.Run(() => Sort(leftArray));
+            Task<int[]> task2 = Task.Run(() => Sort(rightArray));
 
-            return Merge( leftArray, rightArray);
+            await Task.WhenAll(new List<Task<int[]>> { task1, task2 });
+
+            var result = Merge(task1.Result, task2.Result);
+            return result;
         }
 
         public static int[] Merge(int[] leftArray, int[] rightArray)
         {
             int[] array = new int[leftArray.Length + rightArray.Length];
+
             int i = 0;
             int j = 0;
             for (int k = 0; k < array.Length; k++)

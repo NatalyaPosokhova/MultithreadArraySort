@@ -11,7 +11,7 @@ namespace MultithreadArraySort.Tests
         }
 
         [Test]
-        public async Task MergeTwoArraysShouldBeSortedArray()
+        public void MergeTwoArraysShouldBeSortedArray()
         {
             //arrange
             int[] leftArray = new int[] {2, 5};
@@ -20,7 +20,23 @@ namespace MultithreadArraySort.Tests
             int[] expected = new int[] { 2, 4, 5, 8 };
 
             //act
-            int[] actual = await MultithreadMergeSort.Merge(leftArray, rightArray);
+            int[] actual = MultithreadMergeSort.Merge(leftArray, rightArray);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void MergeTwoArraysWithThreeElementsShouldBeSortedArray()
+        {
+            //arrange
+            int[] leftArray = new int[] { 1, 6, 8 };
+            int[] rightArray = new int[] { 2, 4, 7 };
+
+            int[] expected = new int[] { 1, 2, 4, 6, 7, 8 };
+
+            //act
+            int[] actual = MultithreadMergeSort.Merge(leftArray, rightArray);
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -59,7 +75,7 @@ namespace MultithreadArraySort.Tests
             int[] expected = new int[] { 1, 2, 3, 4, 5, 6, 7, 8};
 
             //act
-            int[] actual = await MultithreadMergeSort.Sort(new int[] { 8, 2, 7, 6, 1, 3, 4 });
+            int[] actual = await MultithreadMergeSort.Sort(new int[] { 8, 2, 7, 6, 1, 5, 3, 4 });
 
             //assert
             Assert.AreEqual(expected, actual);
