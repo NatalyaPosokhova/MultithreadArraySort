@@ -8,14 +8,42 @@ namespace MultithreadArraySort
 {
     public static class MultithreadMergeSort2
     {
-        public static Task<int[]> SortAsync(int[] array)
+        public static async Task<int[]> SortAsync(int[] array)
         {
-            throw new NotImplementedException();
+            if (array.Length < 2)
+                return array;
+
+            var leftArray = await SortImplAsync(array, Part.Left);
+            var rightArray = await SortImplAsync(array, Part.Right);
+
+            return Merge(leftArray, rightArray);
         }
 
-        private static Task<int[]> SortImplAsync(int[] array, Part part)
+        private static async Task<int[]> SortImplAsync(int[] array, Part part)
         {
-            throw new NotImplementedException();
+            if (array.Length < 2)
+                return array;
+
+            int leftSize = array.Length / 2;
+            int[] newArray;
+            if (part == Part.Left)
+            {
+                newArray = new int[leftSize];
+                Array.Copy(array, 0, newArray, 0, leftSize);
+            }
+            else
+            {
+                int rightSize = array.Length - leftSize;
+                newArray = new int[rightSize];
+                Array.Copy(array, leftSize, newArray, 0, rightSize);
+            }
+
+            if (newArray.Length < 2)
+                return newArray;
+
+            var leftArray = await SortImplAsync(newArray, Part.Left);
+            var rightArray = await SortImplAsync(newArray, Part.Right);
+            return Merge(leftArray, rightArray);
         }
 
         private enum Part
@@ -60,5 +88,5 @@ namespace MultithreadArraySort
 
             return array;
         }
-    }    
+    }
 }
