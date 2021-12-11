@@ -13,12 +13,17 @@ namespace MultithreadArraySort
             if (array.Length < 2)
                 return array;
 
-            var leftArray = await SortImplAsync(array, Part.Left);
-            var rightArray = await SortImplAsync(array, Part.Right);
+            var leftArrayTask = SortImpl(array, Part.Left);
+            var rightArrayTask = SortImpl(array, Part.Right);
 
-            return Merge(leftArray, rightArray);
+            await leftArrayTask;
+            await rightArrayTask;
+            return Merge(leftArrayTask.Result, rightArrayTask.Result);
         }
-
+        private static async Task <int[]> SortImpl(int[]array,Part part)
+        {
+            return await SortImplAsync(array, part);
+        }
         private static async Task<int[]> SortImplAsync(int[] array, Part part)
         {
             if (array.Length < 2)
@@ -41,9 +46,12 @@ namespace MultithreadArraySort
             if (newArray.Length < 2)
                 return newArray;
 
-            var leftArray = await SortImplAsync(newArray, Part.Left);
-            var rightArray = await SortImplAsync(newArray, Part.Right);
-            return Merge(leftArray, rightArray);
+            var leftArrayTask = SortImpl(newArray, Part.Left);
+            var rightArrayTask = SortImpl(newArray, Part.Right);
+
+            await leftArrayTask;
+            await rightArrayTask;
+            return Merge(leftArrayTask.Result, rightArrayTask.Result);
         }
 
         private enum Part
