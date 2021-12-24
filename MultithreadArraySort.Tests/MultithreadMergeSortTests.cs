@@ -5,9 +5,11 @@ namespace MultithreadArraySort.Tests
 {
     public class Tests
     {
+        private MergeSort _mergeSort;
         [SetUp]
         public void Setup()
         {
+            _mergeSort = new MergeSort();
         }
 
         [Test]
@@ -20,7 +22,7 @@ namespace MultithreadArraySort.Tests
             int[] expected = new int[] { 2, 4, 5, 8 };
 
             //act
-            int[] actual = MultithreadMergeSort.Merge(leftArray, rightArray);
+            int[] actual = _mergeSort.Merge(leftArray, rightArray);
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -36,59 +38,59 @@ namespace MultithreadArraySort.Tests
             int[] expected = new int[] { 1, 2, 4, 6, 7, 8 };
 
             //act
-            int[] actual = MultithreadMergeSort.Merge(leftArray, rightArray);
+            int[] actual = _mergeSort.Merge(leftArray, rightArray);
 
             //assert
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public async Task TrySortEmptyArrayShouldReturnEmptyArray()
+        public void TrySortEmptyArrayShouldReturnEmptyArray()
         {
             //arrange
             int[] expected = new int[] {};
 
             //act
-            int[] actual = await MultithreadMergeSort.Sort(expected);
+            int[] actual = _mergeSort.Sort(expected);
 
             //assert
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public async Task TrySortOneLengthArrayShouldReturnOneLengthArray()
+        public void TrySortOneLengthArrayShouldReturnOneLengthArray()
         {
             //arrange
             int[] expected = new int[] { 1 };
 
             //act
-            int[] actual = await MultithreadMergeSort.Sort(expected);
+            int[] actual = _mergeSort.Sort(expected);
 
             //assert
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public async Task TrySortArrayShouldReturnSortedArray()
+        public void TrySortArrayShouldReturnSortedArray()
         {
             //arrange
             int[] expected = new int[] { 1, 2, 3, 4, 5, 6, 7, 8};
 
             //act
-            int[] actual = await MultithreadMergeSort.Sort(new int[] { 8, 2, 7, 6, 1, 5, 3, 4 });
+            int[] actual = _mergeSort.Sort(new int[] { 8, 2, 7, 6, 1, 5, 3, 4 });
 
             //assert
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public async Task TrySortOddArrayShouldReturnSortedArray()
+        public void TrySortOddArrayShouldReturnSortedArray()
         {
             //arrange
             int[] expected = new int[] { 1, 5, 7, 8, 10, 32, 44 };
 
             //act
-            int[] actual = await MultithreadMergeSort.Sort(new int[] { 7, 5, 8, 10, 44, 32, 1 });
+            int[] actual = _mergeSort.Sort(new int[] { 7, 5, 8, 10, 44, 32, 1 });
 
             //assert
             Assert.AreEqual(expected, actual);
