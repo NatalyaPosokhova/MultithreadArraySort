@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace MultithreadArraySort
 {
-    public static class MultithreadMergeSort
+    public class MultithreadMergeSort
     {
-        public static async Task<int[]> Sort(int[] array)
+        public async Task<int[]> Sort(int[] array)
         {
             if (array.Length < 2)
                 return array;
@@ -28,7 +28,7 @@ namespace MultithreadArraySort
             return result;
         }
 
-        public static int[] Merge(int[] leftArray, int[] rightArray)
+        public int[] Merge(int[] leftArray, int[] rightArray)
         {
             int[] array = new int[leftArray.Length + rightArray.Length];
 
