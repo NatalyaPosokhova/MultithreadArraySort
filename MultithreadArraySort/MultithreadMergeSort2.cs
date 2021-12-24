@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MultithreadArraySort
 {
-    public static class MultithreadMergeSort2
+    public class MultithreadMergeSort2
     {
-        public static async Task<int[]> SortAsync(int[] array)
+        public async Task<int[]> SortAsync(int[] array)
         {
             if (array.Length < 2)
                 return array;
@@ -20,11 +20,11 @@ namespace MultithreadArraySort
             await rightArrayTask;
             return Merge(leftArrayTask.Result, rightArrayTask.Result);
         }
-        private static async Task <int[]> SortImpl(int[]array,Part part)
+        private async Task <int[]> SortImpl(int[]array,Part part)
         {
             return await SortImplAsync(array, part);
         }
-        private static async Task<int[]> SortImplAsync(int[] array, Part part)
+        private async Task<int[]> SortImplAsync(int[] array, Part part)
         {
             if (array.Length < 2)
                 return array;
@@ -60,7 +60,7 @@ namespace MultithreadArraySort
             Right
         }
 
-        public static int[] Merge(int[] leftArray, int[] rightArray)
+        public int[] Merge(int[] leftArray, int[] rightArray)
         {
             int[] array = new int[leftArray.Length + rightArray.Length];
 
